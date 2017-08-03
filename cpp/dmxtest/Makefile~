@@ -1,0 +1,31 @@
+OBJS = imagefuncs.o timefuncs.o logging.o CClip.o CLayer.o main.o
+CC = g++
+DEBUG = -g
+CFLAGS = -c $(DEBUG) `pkg-config --cflags opencv` -std=c++0x
+LFLAGS = $(DEBUG) -lglut -lGL -lGLU -lrt -lartnet -lportaudio -lsndfile `pkg-config --libs opencv sdl` -L/home/martin/libartnet/artnet/
+
+layerplayer : $(OBJS)
+	$(CC) $(LFLAGS) $(OBJS) -o layerplayer
+
+imagefuncs.o : src/imagefuncs.cpp src/imagefuncs.h
+	$(CC) $(CFLAGS) src/imagefuncs.cpp
+
+timefuncs.o : src/timefuncs.cpp src/timefuncs.h
+	$(CC) $(CFLAGS) src/timefuncs.cpp
+
+logging.o : src/logging.cpp src/logging.h
+	$(CC) $(CFLAGS) src/logging.cpp
+
+CClip.o : src/CClip.cpp src/CClip.h src/logging.h
+	$(CC) $(CFLAGS) src/CClip.cpp
+
+src/CLayer.h : src/CClip.h
+
+CLayer.o : src/CLayer.cpp src/CLayer.h src/logging.h src/CClip.h
+	$(CC) $(CFLAGS) src/CLayer.cpp
+
+main.o : src/main.cpp src/CLayer.h src/logging.h src/CClip.h
+	$(CC) $(CFLAGS) src/main.cpp
+
+clean:
+	\rm -v *.o layerplayer
