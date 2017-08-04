@@ -28,7 +28,7 @@ int dmx_handler(artnet_node n, int prt , void *d ) {
         if( prt == 0 ) {
                 data = artnet_read_dmx(n, prt, &len) ;
                 memcpy(dmx, data,len) ;
-                //logger.log(ERROR, "dmx_handler: %d", data[0]);
+                printf("dmx_handler: %d\n", data[0]);
         }
 
         return 0 ;

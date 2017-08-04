@@ -1,8 +1,8 @@
 OBJS = main.o
 CC = g++
 DEBUG = -g
-CFLAGS = -c $(DEBUG) `pkg-config --cflags opencv` -std=c++0x
-LFLAGS = $(DEBUG) -lglut -lGL -lGLU -lrt -lartnet -lportaudio -lsndfile `pkg-config --libs opencv sdl` -L/home/martin/libartnet/artnet/
+CFLAGS = -c $(DEBUG) -std=c++0x
+LFLAGS = $(DEBUG) -lartnet -L/home/martin/libartnet/artnet/
 
 dmxtest : $(OBJS)
 	$(CC) $(LFLAGS) $(OBJS) -o dmxtest
